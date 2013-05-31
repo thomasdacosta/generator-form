@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * Efetua teste de conves‹o de Java para JSON usando a API Google GSON
+ * Efetua teste de convesao de Java para JSON usando a API Google GSON
  * 
  * @author thomasdacosta
  *
@@ -28,7 +28,7 @@ public class JavaToJsonTest {
 	private static final Logger logger = Logger.getLogger(JavaToJsonTest.class);
 	
 	/**
-	 * Testa a convers‹o de um objeto Java para JSON
+	 * Testa a conversao de um objeto Java para JSON
 	 */
 	@Test
 	public void testConvertJavaToJson() {
@@ -39,7 +39,7 @@ public class JavaToJsonTest {
 	}
 
 	/**
-	 * Testa a convers‹o de uma lista de templates para JSON
+	 * Testa a conversao de uma lista de templates para JSON
 	 */
 	@Test
 	public void testConvertJavaListToJson() {
@@ -55,7 +55,7 @@ public class JavaToJsonTest {
 	}
 	
 	/**
-	 * Testa a convers‹o de JSON para Java
+	 * Testa a conversao de JSON para Java
 	 */
 	@Test
 	public void testConvertJsonToJava() {
@@ -87,7 +87,7 @@ public class JavaToJsonTest {
 	}
 	
 	/**
-	 * Testa a classe Wrapper de convers‹o de JSON para Java
+	 * Testa a classe Wrapper de conversao de JSON para Java
 	 */
 	@Test
 	public void testWrapperJsonToJava() {

@@ -29,8 +29,8 @@ import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 
 /**
- * Teste de integração para validar o acesso ao MongoDB via Spring Data
- * Existe um MongoDB embedded para efetuar as validações. 
+ * Teste de integracao para validar o acesso ao MongoDB via Spring Data
+ * Existe um MongoDB embedded para efetuar as validacoes. 
  * Essa API pode ser vista no site https://github.com/flapdoodle-oss/embedmongo.flapdoodle.de
  * 
  * @author thomasdacosta
@@ -80,7 +80,7 @@ public class TemplateRepositoryTest {
 	}
 
 	/**
-	 * Testa a inserção de um documento
+	 * Testa a insercao de um documento
 	 */
 	@Test
 	public void testInsertDocument() {
@@ -100,7 +100,7 @@ public class TemplateRepositoryTest {
 	}
 
 	/**
-	 * Testa a atualização de um documento
+	 * Testa a atualizacao de um documento
 	 */
 	@Test
 	public void testUpdateDocument() {
@@ -137,7 +137,7 @@ public class TemplateRepositoryTest {
 	}
 
 	/**
-	 * Testa a remoção de um documento
+	 * Testa a remocao de um documento
 	 */
 	@Test
 	public void testDeleteDocument() {

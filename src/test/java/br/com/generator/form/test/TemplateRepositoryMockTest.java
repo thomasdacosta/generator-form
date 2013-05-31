@@ -17,7 +17,7 @@ import br.com.generator.form.data.TemplateDocument;
 import br.com.generator.form.data.TemplateRepository;
 
 /**
- * Efetua os testes repositorio de dados da aplicação
+ * Efetua os testes repositorio de dados da aplicacao
  * 
  * @author thomasdacosta
  *
@@ -29,7 +29,7 @@ public class TemplateRepositoryMockTest {
 	private TemplateRepository templateRepository;
 	
 	/**
-	 * Testa a inserção de um documento
+	 * Testa a insercao de um documento
 	 */
 	@Test
 	public void testInsertDocument() {

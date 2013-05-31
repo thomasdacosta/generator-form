@@ -10,7 +10,7 @@ import br.com.generator.form.data.TemplateDocument;
 
 /**
  * Classe que cria os POJO do tipo TemplateDocument, FieldsDocument e RadioDocument
- * para ser utilizado nos testes unitários e integração
+ * para ser utilizado nos testes unitarios e integracao
  * 
  * @author thomasdacosta
  *
