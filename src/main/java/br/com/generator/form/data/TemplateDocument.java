@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * POJO relacionado ao template da aplicação
+ * POJO relacionado ao template da aplicacao
  * 
  * @author thomasdacosta
  *

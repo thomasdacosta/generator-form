@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repositorio do Spring Data que efetua as principais operações
- * relacionadas aos templates da aplicação
+ * Repositorio do Spring Data que efetua as principais operacoes
+ * relacionadas aos templates da aplicacao
  * 
  * @author thomasdacosta
  *
@@ -23,7 +23,7 @@ public class TemplateRepository {
 	}
 	
 	/**
-	 * Busca todos os templates da aplicação
+	 * Busca todos os templates da aplicacao
 	 * 
 	 * @return
 	 */
