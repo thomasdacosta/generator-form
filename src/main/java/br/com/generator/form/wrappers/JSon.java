@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * Efetua a convers‹o de Java para JSON usando o Google GSON
+ * Efetua a conversao de Java para JSON usando o Google GSON
  * 
  * @author thomasdacosta
  *
@@ -25,6 +25,12 @@ public class JSon {
 		return json;
 	}
 	
+	/**
+	 * Converte um JSON para Java
+	 * 
+	 * @param json
+	 * @return
+	 */
 	public static TemplateDocument jsonToJava(String json) {
 		TemplateDocument templateDocument = null;
 		Gson gson = new Gson();
