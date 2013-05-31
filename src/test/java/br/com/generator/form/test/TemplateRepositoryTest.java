@@ -85,7 +85,7 @@ public class TemplateRepositoryTest {
 	@Test
 	public void testInsertDocument() {
 		try {
-			// Criando documento para inserção
+			// Criando documento para insercao
 			templateRepository.dropCollection();
 			TemplateDocument templateDocument = TemplateDocumentGenerated.getTemplateDocumentForTest();
 			templateRepository.insert(templateDocument);
@@ -105,12 +105,12 @@ public class TemplateRepositoryTest {
 	@Test
 	public void testUpdateDocument() {
 		try {
-			// Criando documento para inserção
+			// Criando documento para insercao
 			templateRepository.dropCollection();
 			TemplateDocument templateDocument = TemplateDocumentGenerated.getTemplateDocumentForTest();
 			templateRepository.insert(templateDocument);
 
-			// Verificando o total de documentos na coleção
+			// Verificando o total de documentos na colecao
 			assertEquals(templateRepository.findAll().size(), 1);
 
 			// Buscando documento inserido
@@ -142,7 +142,7 @@ public class TemplateRepositoryTest {
 	@Test
 	public void testDeleteDocument() {
 		try {
-			// Criando documento para inserção
+			// Criando documento para insercao
 			templateRepository.dropCollection();
 			TemplateDocument templateDocument = TemplateDocumentGenerated.getTemplateDocumentForTest();
 			templateRepository.insert(templateDocument);
@@ -161,12 +161,12 @@ public class TemplateRepositoryTest {
 	}
 
 	/**
-	 * Testa a listagem de vários documentos
+	 * Testa a listagem de varios documentos
 	 */
 	@Test
 	public void testListDocument() {
 		try {
-			// Inserindo vários documentos
+			// Inserindo varios documentos
 			templateRepository.dropCollection();
 			for (int i = 0; i < 30; i++) {
 				templateRepository.insert(TemplateDocumentGenerated.getTemplateDocumentForTest());

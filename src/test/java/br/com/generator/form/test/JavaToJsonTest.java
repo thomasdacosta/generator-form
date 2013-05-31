@@ -77,7 +77,7 @@ public class JavaToJsonTest {
 	}
 	
 	/**
-	 * Testa a classe Wrapper de convers‹o de Java para JSON
+	 * Testa a classe Wrapper de conversao de Java para JSON
 	 */
 	@Test
 	public void testWrapperJavaToJson() {
