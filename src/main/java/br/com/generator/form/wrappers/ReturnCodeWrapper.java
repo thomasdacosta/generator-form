@@ -4,7 +4,7 @@ import br.com.generator.form.data.ReturnCode;
 
 /**
  * Wrapper para retorno caso ocorra algum erro no acesso das 
- * operações da aplicação
+ * operacoes da aplicacao
  * 
  * @author thomasdacosta
  *
@@ -13,7 +13,7 @@ public class ReturnCodeWrapper {
 	
 	
 	/**
-	 * Mensagem de retorno quando template é inserido
+	 * Mensagem de retorno quando template eh inserido
 	 * 
 	 * @return
 	 */
@@ -25,7 +25,7 @@ public class ReturnCodeWrapper {
 	}
 	
 	/**
-	 * Mensagem de retorno quando template é atualizado
+	 * Mensagem de retorno quando template eh atualizado
 	 * 
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public class ReturnCodeWrapper {
 	}
 	
 	/**
-	 * Mensagem de retorno quando ocorre um erro de conversão
+	 * Mensagem de retorno quando ocorre um erro de conversao
 	 * 
 	 * @return
 	 */
@@ -49,7 +49,7 @@ public class ReturnCodeWrapper {
 	}
 	
 	/**
-	 * Mensagem de retorno caso não tenha sido encontrado nenhum template
+	 * Mensagem de retorno caso nao tenha sido encontrado nenhum template
 	 * 
 	 * @return
 	 */
@@ -61,7 +61,7 @@ public class ReturnCodeWrapper {
 	}
 	
 	/**
-	 * Mensagem de retorno caso não tenha encontrado o objeto informado
+	 * Mensagem de retorno caso nao tenha encontrado o objeto informado
 	 * 
 	 * @return
 	 */
@@ -73,7 +73,7 @@ public class ReturnCodeWrapper {
 	}
 	
 	/**
-	 * Mensagem de retorno de alguma exceção da aplicação
+	 * Mensagem de retorno de alguma excecao da aplicacao
 	 * 
 	 * @return
 	 */
@@ -85,7 +85,7 @@ public class ReturnCodeWrapper {
 	}
 	
 	/**
-	 * Mensagem de retorno quando um template é excluido
+	 * Mensagem de retorno quando um template eh excluido
 	 * 
 	 * @return
 	 */

@@ -1,7 +1,7 @@
 package br.com.generator.form.data;
 
 /**
- * Retorna mensagem de erro de acordo com a operação da aplicação
+ * Retorna mensagem de erro de acordo com a operacao da aplicacao
  * 
  * @author thomasdacosta
  *
