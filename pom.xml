@@ -15,11 +15,6 @@
 		<org.springframework.version>3.2.1.RELEASE</org.springframework.version>
 	</properties>
 
-	<configuration>
-		<source>1.7</source>
-		<target>1.7</target>
-	</configuration>
-
 	<repositories>
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
@@ -180,6 +175,18 @@
 
 	<build>
 		<finalName>generator-form</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+
 	</build>
 
 </project>
