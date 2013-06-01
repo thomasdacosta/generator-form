@@ -1,6 +1,7 @@
 package br.com.generator.form.test;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -12,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.UUID;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,11 +28,26 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.mongodb.Mongo;
+
+import de.flapdoodle.embed.mongo.MongodExecutable;
+import de.flapdoodle.embed.mongo.MongodProcess;
+import de.flapdoodle.embed.mongo.MongodStarter;
+import de.flapdoodle.embed.mongo.config.MongodConfig;
+import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.process.runtime.Network;
+
 import br.com.generator.form.data.FieldsDocument;
 import br.com.generator.form.data.TemplateDocument;
 import br.com.generator.form.data.TemplateRepository;
 import br.com.generator.form.wrappers.JSon;
 
+/**
+ * Teste para validacao do Controller do Spring MVC
+ * 
+ * @author thomasdacosta
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextHierarchy({
@@ -51,6 +68,42 @@ public class TemplateControllerTest {
 	
 	private MockMvc mvc;
 	
+	private static MongodExecutable mongodExe;
+	private static MongodProcess mongod;
+	private static Mongo mongo;
+
+	/**
+	 * Inicializa o MongoDB embedded
+	 */
+	@BeforeClass
+	public static void setup() {
+		MongodStarter runtime = MongodStarter.getDefaultInstance();
+		try {
+			mongodExe = runtime.prepare(new MongodConfig(Version.Main.PRODUCTION, 98756, Network.localhostIsIPv6()));
+			mongod = mongodExe.start();
+			mongo = new Mongo("localhost", 98756);
+		} catch (Exception ex) {
+			fail(ex.getMessage());
+		}
+	}
+	
+	/**
+	 * Para o MongoDB embedded
+	 */
+	@AfterClass
+	public static void tearDown() {
+		try {
+			mongod.stop();
+			mongodExe.stop();
+			mongo.close();
+		} catch (Exception ex) {
+			fail(ex.getMessage());
+		}
+	}
+	
+	/**
+	 * Inicializa as informacoes para o testes 
+	 */
 	private void setupData() {
 		templateRepository.dropCollection();
 		
@@ -71,19 +124,19 @@ public class TemplateControllerTest {
 		templateRepository.insert(templateDocument3);
 	}
 	
-	@BeforeClass
-	public static void setup() {
-		System.setProperty("http.proxyHost", "proxy.viverebrasil");
-		System.setProperty("http.proxyPort", "3128");
-		System.setProperty("http.proxyUser", "thomas.costa");
-		System.setProperty("http.proxyPassword", "takuma79");		
-	}
-	
+	/**
+	 * Inicializa o MockMvc do Spring
+	 */
 	@Before
 	public void setupMvc() {
 		mvc = MockMvcBuilders.webAppContextSetup(this.applicationContext).build();
 	}
 	
+	/**
+	 * Efetua o teste de requisicao por GET 
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testGet() throws Exception {
 		setupData();
@@ -94,6 +147,11 @@ public class TemplateControllerTest {
 				.andExpect(jsonPath("$[0].title", equalTo("template numero 1")));
 	}
 	
+	/**
+	 * Efetua o teste de requisicao por GET com Id
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testGet_Id() throws Exception {
 		setupData();
@@ -104,6 +162,11 @@ public class TemplateControllerTest {
 				.andExpect(jsonPath("$.title", equalTo("template numero 3")));
 	}
 	
+	/**
+	 * Efetua o teste de requisicao por DELETE
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testDelete_Id() throws Exception {
 		setupData();
@@ -120,6 +183,11 @@ public class TemplateControllerTest {
 				.andExpect(jsonPath("$.code", equalTo(3000)));				
 	}
 	
+	/**
+	 * Efetua o teste de requisicao por POST
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testPost() throws Exception {
 		setupData();
@@ -143,6 +211,11 @@ public class TemplateControllerTest {
 				.andExpect(jsonPath("$.code", equalTo(1000)));
 	}
 	
+	/**
+	 * Efetua o teste de requisicao por PUT
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testPut_Id() throws Exception {
 		setupData();
