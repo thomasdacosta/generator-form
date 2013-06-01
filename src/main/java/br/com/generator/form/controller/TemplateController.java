@@ -19,6 +19,12 @@ import br.com.generator.form.data.TemplateRepository;
 import br.com.generator.form.wrappers.JSon;
 import br.com.generator.form.wrappers.ReturnCodeWrapper;
 
+/**
+ * Controller para requisicoes REST
+ * 
+ * @author thomasdacosta
+ *
+ */
 @Controller
 @RequestMapping("/templates")
 public class TemplateController {
@@ -28,6 +34,12 @@ public class TemplateController {
 	@Autowired
 	private TemplateRepository templateRepository;
 	
+	/**
+	 * Recebe as requisicoes GET
+	 * 
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	@ResponseStatus(value=HttpStatus.OK)
 	public @ResponseBody String listTemplates(ModelMap modelMap) {
@@ -44,6 +56,13 @@ public class TemplateController {
 		}
 	}
 	
+	/**
+	 * Recebe as requisicoes GET com Id
+	 * 
+	 * @param id
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping(value="{id}", method = RequestMethod.GET, produces = "application/json")
 	@ResponseStatus(value=HttpStatus.OK)
 	public @ResponseBody String listTemplatesById(@PathVariable String id, ModelMap modelMap) {
@@ -60,6 +79,13 @@ public class TemplateController {
 		}
 	}
 	
+	/**
+	 * Recebe as requisicoes DELETE
+	 * 
+	 * @param id
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping(value="{id}", method = RequestMethod.DELETE, produces = "application/json")
 	@ResponseStatus(value=HttpStatus.OK)
 	public @ResponseBody String deleteTemplate(@PathVariable String id, ModelMap modelMap) {
@@ -77,6 +103,13 @@ public class TemplateController {
 		}
 	}
 	
+	/**
+	 * Recebe as requisicoes POST
+	 * 
+	 * @param body
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	@ResponseStatus(value=HttpStatus.CREATED)
 	public @ResponseBody String insertTemplate(@RequestBody String body, ModelMap modelMap) {
@@ -94,6 +127,14 @@ public class TemplateController {
 		}
 	}
 	
+	/**
+	 * Recebe as requisicoes PUT
+	 * 
+	 * @param id
+	 * @param body
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping(value="{id}", method = RequestMethod.PUT, produces = "application/json")
 	@ResponseStatus(value=HttpStatus.OK)
 	public @ResponseBody String updateTemplate(@PathVariable String id, @RequestBody String body, ModelMap modelMap) {
