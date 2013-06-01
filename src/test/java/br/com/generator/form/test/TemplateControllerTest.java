@@ -79,9 +79,9 @@ public class TemplateControllerTest {
 	public static void setup() {
 		MongodStarter runtime = MongodStarter.getDefaultInstance();
 		try {
-			mongodExe = runtime.prepare(new MongodConfig(Version.Main.PRODUCTION, 98756, Network.localhostIsIPv6()));
+			mongodExe = runtime.prepare(new MongodConfig(Version.Main.PRODUCTION, 12346, Network.localhostIsIPv6()));
 			mongod = mongodExe.start();
-			mongo = new Mongo("localhost", 98756);
+			mongo = new Mongo("localhost", 12346);
 		} catch (Exception ex) {
 			fail(ex.getMessage());
 		}
