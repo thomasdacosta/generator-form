@@ -22,7 +22,7 @@
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongo" ref="mongo" />
 		<constructor-arg name="databaseName" value="6A2GyuiAW3BKbGfAn5ksLw" />
-		<constructor-arg name="userCredentials" value="userCredentials" />
+		<constructor-arg name="userCredentials" value="${userCredentials}" />
 	</bean>
 
 	<bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
