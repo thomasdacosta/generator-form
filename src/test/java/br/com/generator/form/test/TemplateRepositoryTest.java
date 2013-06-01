@@ -55,6 +55,10 @@ public class TemplateRepositoryTest {
 	 */
 	@BeforeClass
 	public static void setup() {
+		System.setProperty("http.proxyHost", "proxy.viverebrasil");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("http.proxyUser", "thomas.costa");
+		
 		MongodStarter runtime = MongodStarter.getDefaultInstance();
 		try {
 			mongodExe = runtime.prepare(new MongodConfig(Version.Main.PRODUCTION, 12345, Network.localhostIsIPv6()));
