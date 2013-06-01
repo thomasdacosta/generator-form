@@ -15,14 +15,14 @@
 	</context:component-scan>
 	
 	<bean id="userCredentials" class="org.springframework.data.authentication.UserCredentials">
-	    <constructor-arg name="username" ref="generatorform" />
-	    <constructor-arg name="password" ref="generatorform123" />
+	    <constructor-arg name="username" value="generatorform" />
+	    <constructor-arg name="password" value="generatorform123" />
 	</bean>
 
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongo" ref="mongo" />
 		<constructor-arg name="databaseName" value="6A2GyuiAW3BKbGfAn5ksLw" />
-		<constructor-arg name="userCredentials" value="${userCredentials}" />
+		<constructor-arg name="userCredentials" ref="userCredentials" />
 	</bean>
 
 	<bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
