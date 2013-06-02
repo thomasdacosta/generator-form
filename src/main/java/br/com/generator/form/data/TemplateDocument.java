@@ -25,7 +25,7 @@ public class TemplateDocument {
 	private String title;
 
 	@Valid
-	@NotNull(message="fields n‹o pode ser vazio")
+	@NotNull(message="fields nao pode ser vazio")
 	private List<FieldsDocument> fields;
 	
 	public TemplateDocument() {
