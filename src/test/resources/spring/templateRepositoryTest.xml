@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
@@ -11,7 +10,8 @@
 	<context:annotation-config />
 
 	<context:component-scan base-package="br.com.generator.form">
-		<context:exclude-filter type="annotation" expression="org.springframework.context.annotation.Configuration" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.context.annotation.Configuration" />
 	</context:component-scan>
 
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
@@ -25,5 +25,10 @@
 	</bean>
 
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean id="validatorFactory" class="javax.validation.Validation" factory-method="buildDefaultValidatorFactory" />
+	<bean id="validator" factory-bean="validatorFactory" factory-method="getValidator" />
+	<bean id="validatorFields" class="br.com.generator.form.wrappers.ValidatorFields" />
+
 
 </beans>
