@@ -66,6 +66,9 @@ public class TemplateDocument {
 	}
 
 	public List<Map<String, Object>> getData() {
+		if (data == null) {
+			data = new ArrayList<>();
+		}
 		return data;
 	}
 
