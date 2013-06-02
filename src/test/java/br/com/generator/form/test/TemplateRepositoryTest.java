@@ -5,8 +5,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,6 +22,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import br.com.generator.form.data.TemplateDocument;
 import br.com.generator.form.data.TemplateRepository;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mongodb.Mongo;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
@@ -39,6 +44,8 @@ import de.flapdoodle.embed.process.runtime.Network;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/templateRepositoryTest.xml" })
 public class TemplateRepositoryTest {
+	
+	private static final Logger logger = Logger.getLogger(TemplateRepositoryTest.class);
 
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -74,6 +81,36 @@ public class TemplateRepositoryTest {
 			mongod.stop();
 			mongodExe.stop();
 			mongo.close();
+		} catch (Exception ex) {
+			fail(ex.getMessage());
+		}
+	}
+	
+	/**
+	 * Testando insercao de um objeto com field data
+	 */
+	@Test
+	public void testInsertDocumentData() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String url = this.getClass().getResource("/json/templateDocumentData.json").getPath();
+
+		try (BufferedReader in = new BufferedReader(new FileReader(url))) {
+			StringBuffer json = new StringBuffer();
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				json.append(line);
+			}
+			
+			templateRepository.dropCollection();
+			
+			TemplateDocument templateDocument = gson.fromJson(json.toString(), TemplateDocument.class);
+			assertNotNull(templateDocument);
+			templateRepository.insert(templateDocument);
+			
+			TemplateDocument templateDocument2 = templateRepository.find(templateDocument.getId());
+			String jsonStr = gson.toJson(templateDocument2);
+			assertNotNull(jsonStr);
+			logger.info(jsonStr);
 		} catch (Exception ex) {
 			fail(ex.getMessage());
 		}

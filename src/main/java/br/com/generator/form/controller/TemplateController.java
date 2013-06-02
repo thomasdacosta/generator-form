@@ -127,7 +127,7 @@ public class TemplateController {
 			} else {
 				if (templateDocument != null) {
 					templateRepository.insert(templateDocument);
-					return JSon.javaToJson(ReturnCode.insertSucess());
+					return JSon.javaToJson(templateDocument);
 				} else {
 					return JSon.javaToJson(ReturnCode.erroConversionJsonToJava());
 				}
@@ -153,7 +153,7 @@ public class TemplateController {
 			TemplateDocument templateDocument = JSon.jsonToJava(body);
 			if (templateDocument != null) {
 				templateRepository.update(templateDocument);
-				return JSon.javaToJson(ReturnCode.updateSucess());
+				return JSon.javaToJson(templateDocument);
 			} else {
 				return JSon.javaToJson(ReturnCode.erroConversionJsonToJava());
 			}

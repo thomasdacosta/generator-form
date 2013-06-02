@@ -1,0 +1,50 @@
+{
+  "id": "8f713565-b0cc-4ad9-adea-793c370ed0a0",
+  "title": "titulo para efetuar um teste",
+  "fields": [
+    {
+      "label": "label1",
+      "type": "type1",
+      "required": true,
+      "readOnly": false,
+      "value": "value1",
+      "maxLength": 10,
+      "placeholder": "placeholder1",
+      "radios": [
+        {
+          "label": "opcao1",
+          "value": "valor1"
+        },
+        {
+          "label": "opcao2",
+          "value": "valor2"
+        },
+        {
+          "label": "opcao3",
+          "value": "valor3"
+        }
+      ]
+    },
+    {
+      "label": "label1",
+      "type": "type1",
+      "required": true,
+      "readOnly": false,
+      "value": "value1",
+      "maxLength": 10,
+      "placeholder": "placeholder1"
+    }
+  ],
+  data: [
+	{
+		nome: "Guilherme",
+		sexo: "masculino",
+		email: "guilherme@email.com",
+		idade: 27
+	},
+	{
+		nome: "Rafael",
+		sexo: "masculino"
+	}
+  ]
+}

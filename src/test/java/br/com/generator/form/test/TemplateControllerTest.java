@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.UUID;
 
+import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -192,9 +193,7 @@ public class TemplateControllerTest {
 	public void testPost() throws Exception {
 		setupData();
 		
-		UUID uuid = UUID.randomUUID();
 		TemplateDocument templateDocument = new TemplateDocument();
-		templateDocument.setId(uuid.toString());
 		templateDocument.setTitle("novo template");
 		
 		FieldsDocument fieldsDocument = new FieldsDocument();
@@ -202,13 +201,13 @@ public class TemplateControllerTest {
 		fieldsDocument.setType("type");
 		
 		templateDocument.addFieldsDocument(fieldsDocument);
-
+		
 		mvc.perform(post("/templates")
 				.content(JSon.javaToJson(templateDocument).getBytes()))
 				.andDo(print())
 				.andExpect(status().isCreated())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))				
-				.andExpect(jsonPath("$.code", equalTo(1000)));
+				.andExpect(jsonPath("$.id", Matchers.notNullValue()));
 	}
 	
 	/**
@@ -226,7 +225,7 @@ public class TemplateControllerTest {
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))				
-				.andExpect(jsonPath("$.code", equalTo(6000)));
+				.andExpect(jsonPath("$.id", equalTo(templateDocument2.getId())));
 		
 		mvc.perform(get("/templates/" + templateDocument2.getId()).accept(MediaType.APPLICATION_JSON))
 				.andDo(print())

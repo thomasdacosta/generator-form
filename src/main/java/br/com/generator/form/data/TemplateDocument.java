@@ -2,6 +2,7 @@ package br.com.generator.form.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -27,6 +28,8 @@ public class TemplateDocument {
 	@Valid
 	@NotNull(message="fields nao pode ser vazio")
 	private List<FieldsDocument> fields;
+	
+	private List<Map<String, Object>> data;
 	
 	public TemplateDocument() {
 	}
@@ -60,6 +63,14 @@ public class TemplateDocument {
 			fields = new ArrayList<FieldsDocument>();
 		}
 		fields.add(fieldsDocument);
+	}
+
+	public List<Map<String, Object>> getData() {
+		return data;
+	}
+
+	public void setData(List<Map<String, Object>> data) {
+		this.data = data;
 	}
 	
 }
