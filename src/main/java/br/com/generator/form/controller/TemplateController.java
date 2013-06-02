@@ -85,6 +85,29 @@ public class TemplateController {
 	}
 	
 	/**
+	 * Recebe as requisicoes GET com Id para buscar dados
+	 * 
+	 * @param id
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value="{id}/data", method = RequestMethod.GET, produces = "application/json")
+	@ResponseStatus(value=HttpStatus.OK)
+	public @ResponseBody String listDataById(@PathVariable String id, ModelMap modelMap) {
+		try {
+			TemplateDocument templateDocument = templateRepository.find(id);
+			if (templateDocument != null) {
+				return JSon.javaToJson(templateDocument.getData());
+			} else {
+				return JSon.javaToJson(ReturnCode.notFound());
+			}
+		} catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			return JSon.javaToJson(ReturnCode.exceptionError());
+		}
+	}
+	
+	/**
 	 * Recebe as requisicoes DELETE
 	 * 
 	 * @param id
@@ -118,6 +141,36 @@ public class TemplateController {
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	@ResponseStatus(value=HttpStatus.CREATED)
 	public @ResponseBody String insertTemplate(@RequestBody String body, ModelMap modelMap) {
+		try {
+			TemplateDocument templateDocument = JSon.jsonToJava(body);
+			List<ValidatorCodeError> msgs = validatorFields.validate(templateDocument);
+			
+			if (msgs.size() > 0) {
+				return JSon.javaToJson(msgs);
+			} else {
+				if (templateDocument != null) {
+					templateRepository.insert(templateDocument);
+					return JSon.javaToJson(templateDocument);
+				} else {
+					return JSon.javaToJson(ReturnCode.erroConversionJsonToJava());
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			return JSon.javaToJson(ReturnCode.exceptionError());			
+		}
+	}
+	
+	/**
+	 * Recebe as requisicoes POST para insercao de dados
+	 * 
+	 * @param body
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value="{id}/data", method = RequestMethod.POST, produces = "application/json")
+	@ResponseStatus(value=HttpStatus.CREATED)
+	public @ResponseBody String insertData(@RequestBody String body, ModelMap modelMap) {
 		try {
 			TemplateDocument templateDocument = JSon.jsonToJava(body);
 			List<ValidatorCodeError> msgs = validatorFields.validate(templateDocument);
