@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import br.com.generator.form.data.TemplateDocument;
 import br.com.generator.form.data.TemplateRepository;
+import br.com.generator.form.data.ValidatorCodeError;
 import br.com.generator.form.wrappers.JSon;
-import br.com.generator.form.wrappers.ReturnCodeWrapper;
+import br.com.generator.form.wrappers.ReturnCode;
+import br.com.generator.form.wrappers.ValidatorFields;
 
 /**
  * Controller para requisicoes REST
@@ -34,6 +36,9 @@ public class TemplateController {
 	@Autowired
 	private TemplateRepository templateRepository;
 	
+	@Autowired
+	private ValidatorFields validatorFields;
+	
 	/**
 	 * Recebe as requisicoes GET
 	 * 
@@ -48,11 +53,11 @@ public class TemplateController {
 			if (documents != null && documents.size() > 0) {
 				return JSon.javaToJson(documents);
 			} else {
-				return JSon.javaToJson(ReturnCodeWrapper.emptyList());
+				return JSon.javaToJson(ReturnCode.emptyList());
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			return JSon.javaToJson(ReturnCodeWrapper.exceptionError());
+			return JSon.javaToJson(ReturnCode.exceptionError());
 		}
 	}
 	
@@ -71,11 +76,11 @@ public class TemplateController {
 			if (templateDocument != null) {
 				return JSon.javaToJson(templateDocument);
 			} else {
-				return JSon.javaToJson(ReturnCodeWrapper.notFound());
+				return JSon.javaToJson(ReturnCode.notFound());
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			return JSon.javaToJson(ReturnCodeWrapper.exceptionError());
+			return JSon.javaToJson(ReturnCode.exceptionError());
 		}
 	}
 	
@@ -93,13 +98,13 @@ public class TemplateController {
 			TemplateDocument templateDocument = templateRepository.find(id);
 			if (templateDocument != null) {
 				templateRepository.delete(id);
-				return JSon.javaToJson(ReturnCodeWrapper.deleteSucess());
+				return JSon.javaToJson(ReturnCode.deleteSucess());
 			} else {
-				return JSon.javaToJson(ReturnCodeWrapper.notFound());
+				return JSon.javaToJson(ReturnCode.notFound());
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			return JSon.javaToJson(ReturnCodeWrapper.exceptionError());
+			return JSon.javaToJson(ReturnCode.exceptionError());
 		}
 	}
 	
@@ -115,15 +120,21 @@ public class TemplateController {
 	public @ResponseBody String insertTemplate(@RequestBody String body, ModelMap modelMap) {
 		try {
 			TemplateDocument templateDocument = JSon.jsonToJava(body);
-			if (templateDocument != null) {
-				templateRepository.insert(templateDocument);
-				return JSon.javaToJson(ReturnCodeWrapper.insertSucess());
+			List<ValidatorCodeError> msgs = validatorFields.validate(templateDocument);
+			
+			if (msgs.size() > 0) {
+				return JSon.javaToJson(msgs);
 			} else {
-				return JSon.javaToJson(ReturnCodeWrapper.erroConversionJsonToJava());
+				if (templateDocument != null) {
+					templateRepository.insert(templateDocument);
+					return JSon.javaToJson(ReturnCode.insertSucess());
+				} else {
+					return JSon.javaToJson(ReturnCode.erroConversionJsonToJava());
+				}
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			return JSon.javaToJson(ReturnCodeWrapper.exceptionError());			
+			return JSon.javaToJson(ReturnCode.exceptionError());			
 		}
 	}
 	
@@ -142,13 +153,13 @@ public class TemplateController {
 			TemplateDocument templateDocument = JSon.jsonToJava(body);
 			if (templateDocument != null) {
 				templateRepository.update(templateDocument);
-				return JSon.javaToJson(ReturnCodeWrapper.updateSucess());
+				return JSon.javaToJson(ReturnCode.updateSucess());
 			} else {
-				return JSon.javaToJson(ReturnCodeWrapper.erroConversionJsonToJava());
+				return JSon.javaToJson(ReturnCode.erroConversionJsonToJava());
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			return JSon.javaToJson(ReturnCodeWrapper.exceptionError());			
+			return JSon.javaToJson(ReturnCode.exceptionError());			
 		}
 	}
 	

@@ -234,5 +234,22 @@ public class TemplateControllerTest {
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))				
 				.andExpect(jsonPath("$.title", equalTo("atualizando um template")));		
 	}
+	
+	@Test
+	public void testPost_Error() throws Exception {
+		setupData();
+		TemplateDocument templateDocument = new TemplateDocument();
+		FieldsDocument fieldsDocument = new FieldsDocument();
+		fieldsDocument.setLabel("label");
+		fieldsDocument.setType("type");
+		templateDocument.addFieldsDocument(fieldsDocument);
+
+		mvc.perform(post("/templates")
+				.content(JSon.javaToJson(templateDocument).getBytes()))
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))				
+				.andExpect(jsonPath("$[0].field", equalTo("title")));
+	}
 
 }

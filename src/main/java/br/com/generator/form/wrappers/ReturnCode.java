@@ -1,6 +1,6 @@
 package br.com.generator.form.wrappers;
 
-import br.com.generator.form.data.ReturnCode;
+import br.com.generator.form.data.ReturnCodeError;
 
 /**
  * Wrapper para retorno caso ocorra algum erro no acesso das 
@@ -9,7 +9,7 @@ import br.com.generator.form.data.ReturnCode;
  * @author thomasdacosta
  *
  */
-public class ReturnCodeWrapper {
+public class ReturnCode {
 	
 	
 	/**
@@ -17,8 +17,8 @@ public class ReturnCodeWrapper {
 	 * 
 	 * @return
 	 */
-	public static ReturnCode insertSucess() {
-		ReturnCode returnCode = new ReturnCode();
+	public static ReturnCodeError insertSucess() {
+		ReturnCodeError returnCode = new ReturnCodeError();
 		returnCode.setCode(1000);
 		returnCode.setMsg("Template inserido com sucesso");
 		return returnCode;
@@ -29,8 +29,8 @@ public class ReturnCodeWrapper {
 	 * 
 	 * @return
 	 */
-	public static ReturnCode updateSucess() {
-		ReturnCode returnCode = new ReturnCode();
+	public static ReturnCodeError updateSucess() {
+		ReturnCodeError returnCode = new ReturnCodeError();
 		returnCode.setCode(6000);
 		returnCode.setMsg("Template atualizado com sucesso");
 		return returnCode;
@@ -41,8 +41,8 @@ public class ReturnCodeWrapper {
 	 * 
 	 * @return
 	 */
-	public static ReturnCode erroConversionJsonToJava() {
-		ReturnCode returnCode = new ReturnCode();
+	public static ReturnCodeError erroConversionJsonToJava() {
+		ReturnCodeError returnCode = new ReturnCodeError();
 		returnCode.setCode(7000);
 		returnCode.setMsg("Erro ao converter objeto");
 		return returnCode;
@@ -53,8 +53,8 @@ public class ReturnCodeWrapper {
 	 * 
 	 * @return
 	 */
-	public static ReturnCode emptyList() {
-		ReturnCode returnCode = new ReturnCode();
+	public static ReturnCodeError emptyList() {
+		ReturnCodeError returnCode = new ReturnCodeError();
 		returnCode.setCode(2000);
 		returnCode.setMsg("Nao existe template cadastrado");
 		return returnCode;
@@ -65,8 +65,8 @@ public class ReturnCodeWrapper {
 	 * 
 	 * @return
 	 */
-	public static ReturnCode notFound() {
-		ReturnCode returnCode = new ReturnCode();
+	public static ReturnCodeError notFound() {
+		ReturnCodeError returnCode = new ReturnCodeError();
 		returnCode.setCode(3000);
 		returnCode.setMsg("Informacao nao existe");
 		return returnCode;
@@ -77,8 +77,8 @@ public class ReturnCodeWrapper {
 	 * 
 	 * @return
 	 */
-	public static ReturnCode exceptionError() {
-		ReturnCode returnCode = new ReturnCode();
+	public static ReturnCodeError exceptionError() {
+		ReturnCodeError returnCode = new ReturnCodeError();
 		returnCode.setCode(5000);
 		returnCode.setMsg("Ocorreu um erro na aplicacao. Tente novamente mais tarde");
 		return returnCode;
@@ -89,8 +89,8 @@ public class ReturnCodeWrapper {
 	 * 
 	 * @return
 	 */
-	public static ReturnCode deleteSucess() {
-		ReturnCode returnCode = new ReturnCode();
+	public static ReturnCodeError deleteSucess() {
+		ReturnCodeError returnCode = new ReturnCodeError();
 		returnCode.setCode(4000);
 		returnCode.setMsg("Template excluido com sucesso");
 		return returnCode;

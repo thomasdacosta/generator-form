@@ -3,6 +3,9 @@ package br.com.generator.form.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 /**
  * POJO relacionado aos fields de um template
  * 
@@ -11,13 +14,18 @@ import java.util.List;
  */
 public class FieldsDocument {
 	
+	@NotNull(message="label de um field nao pode ser vazio")
 	private String label;
+	
+	@NotNull(message="type de um field nao pode ser vazio")
 	private String type;
 	private Boolean required;
 	private Boolean readOnly;
 	private String value;
 	private Integer maxLength;
 	private String placeholder;
+	
+	@Valid
 	private List<RadioDocument> radios;
 	
 	public FieldsDocument() {

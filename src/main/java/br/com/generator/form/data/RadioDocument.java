@@ -1,5 +1,7 @@
 package br.com.generator.form.data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * POJO relacionado aos radios de um template
  * 
@@ -8,7 +10,10 @@ package br.com.generator.form.data;
  */
 public class RadioDocument {
 	
+	@NotNull(message="label de um radio nao pode ser vazio")
 	private String label;
+	
+	@NotNull(message="value de um radio nao pode ser vazio")
 	private String value;
 	
 	public RadioDocument() {

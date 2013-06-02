@@ -6,12 +6,12 @@ package br.com.generator.form.data;
  * @author thomasdacosta
  *
  */
-public class ReturnCode {
+public class ReturnCodeError {
 	
 	private Integer code;
 	private String msg;
 	
-	public ReturnCode() {
+	public ReturnCodeError() {
 	}
 
 	public Integer getCode() {

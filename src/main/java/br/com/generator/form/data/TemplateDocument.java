@@ -3,6 +3,9 @@ package br.com.generator.form.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +20,12 @@ public class TemplateDocument {
 	
 	@Id
 	private String id;
+	
+	@NotNull(message="title nao pode ser nulo")
 	private String title;
+
+	@Valid
+	@NotNull(message="fields n‹o pode ser vazio")
 	private List<FieldsDocument> fields;
 	
 	public TemplateDocument() {
