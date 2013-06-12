@@ -11,6 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.hamcrest.Matchers;
@@ -66,6 +70,7 @@ public class TemplateControllerTest {
 	private TemplateDocument templateDocument1 = null; 
 	private TemplateDocument templateDocument2 = null;
 	private TemplateDocument templateDocument3 = null;
+	private TemplateDocument templateDocument4 = null;
 	
 	private MockMvc mvc;
 	
@@ -120,9 +125,37 @@ public class TemplateControllerTest {
 		templateDocument3 = TemplateDocumentGenerated.getTemplateDocumentForTest(id3);
 		templateDocument3.setTitle("template numero 3");
 		
+		String id4 = UUID.randomUUID().toString();
+		templateDocument4 = TemplateDocumentGenerated.getTemplateDocumentForTest(id4);
+		templateDocument4.setTitle("form de validacao");
+		
+		FieldsDocument fieldsDocument1 = new FieldsDocument();
+		fieldsDocument1.setLabel("nome");
+		fieldsDocument1.setMaxLength(10);
+		fieldsDocument1.setRequired(true);
+		fieldsDocument1.setType("text");
+		
+		FieldsDocument fieldsDocument2 = new FieldsDocument();
+		fieldsDocument2.setLabel("email");
+		fieldsDocument2.setMaxLength(100);
+		fieldsDocument2.setRequired(false);
+		fieldsDocument2.setType("text");	
+		
+		templateDocument4.addFieldsDocument(fieldsDocument1);
+		templateDocument4.addFieldsDocument(fieldsDocument2);		
+		
+		List<Map<String, Object>> listMaps = new ArrayList<>();
+		Map<String, Object> mapData = new HashMap<>();
+		mapData.put("nome", "thomas");
+		mapData.put("idade", "34");
+		mapData.put("profissao", "medico");
+		listMaps.add(mapData);
+		templateDocument3.setData(listMaps);
+		
 		templateRepository.insert(templateDocument1);
 		templateRepository.insert(templateDocument2);
 		templateRepository.insert(templateDocument3);
+		templateRepository.insert(templateDocument4);
 	}
 	
 	/**
@@ -250,5 +283,79 @@ public class TemplateControllerTest {
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))				
 				.andExpect(jsonPath("$[0].field", equalTo("title")));
 	}
+	
+	@Test
+	public void testPut_Error() throws Exception {
+		setupData();
+		
+		mvc.perform(get("/templates/" + templateDocument2.getId()).accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+		
+		TemplateDocument templateDocument = new TemplateDocument();
+		templateDocument.setId(templateDocument2.getId());
+		templateDocument.setTitle("atualizando somente o titulo deve permanecer o resto");
+		templateDocument.setFields(new ArrayList<FieldsDocument>());
+		
+		mvc.perform(put("/templates/" + templateDocument.getId())
+				.content(JSon.javaToJson(templateDocument).getBytes()))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON));				
+		
+		mvc.perform(get("/templates/" + templateDocument2.getId()).accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON));		
+	}
+	
+	@Test
+	public void testPostData_Error() throws Exception {
+		setupData();
+		
+		List<Map<String, Object>> maps = new ArrayList<>();
+		Map<String, Object> nome = new HashMap<>();
+		nome.put("nome", "Thomas da Costa");
+		nome.put("email", "thomasdacosta@gmail.com");
+		maps.add(nome);		
+		
+		mvc.perform(post("/templates/" + templateDocument4.getId() + "/data").accept(MediaType.APPLICATION_JSON)
+				.content(JSon.javaToJson(maps).getBytes()))
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$[0].field", equalTo("nome")));
+		
+		mvc.perform(get("/templates/" + templateDocument4.getId() + "/data").accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$", equalTo("[]")));		
+	}
+	
+	@Test
+	public void testPostData() throws Exception {
+		setupData();
+		
+		List<Map<String, Object>> maps = new ArrayList<>();
+		Map<String, Object> nome = new HashMap<>();
+		nome.put("nome", "Thomas");
+		nome.put("email", "thomasdacosta@gmail.com");
+		maps.add(nome);		
+		
+		mvc.perform(post("/templates/" + templateDocument4.getId() + "/data").accept(MediaType.APPLICATION_JSON)
+				.content(JSon.javaToJson(maps).getBytes()))
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$[0].nome", equalTo("Thomas")));
+		
+		mvc.perform(get("/templates/" + templateDocument4.getId() + "/data").accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$[0].nome", equalTo("Thomas")));		
+	}	
 
 }

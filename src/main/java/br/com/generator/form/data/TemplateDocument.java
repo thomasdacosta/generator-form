@@ -76,4 +76,11 @@ public class TemplateDocument {
 		this.data = data;
 	}
 	
+	public void addData(Map<String, Object> value) {
+		if (data == null) {
+			data = new ArrayList<>();
+		}
+		data.add(value);
+	}
+	
 }

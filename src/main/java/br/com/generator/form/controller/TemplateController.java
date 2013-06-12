@@ -1,7 +1,9 @@
 package br.com.generator.form.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import br.com.generator.form.data.TemplateDocument;
+import br.com.generator.form.data.TemplateDocumentBusiness;
 import br.com.generator.form.data.TemplateRepository;
 import br.com.generator.form.data.ValidatorCodeError;
 import br.com.generator.form.wrappers.JSon;
@@ -37,6 +40,9 @@ public class TemplateController {
 	private TemplateRepository templateRepository;
 	
 	@Autowired
+	private TemplateDocumentBusiness templateDocumentBusiness;
+	
+	@Autowired
 	private ValidatorFields validatorFields;
 	
 	/**
@@ -49,11 +55,11 @@ public class TemplateController {
 	@ResponseStatus(value=HttpStatus.OK)
 	public @ResponseBody String listTemplates(ModelMap modelMap) {
 		try {
-			List<TemplateDocument> documents = templateRepository.findAll();
-			if (documents != null && documents.size() > 0) {
-				return JSon.javaToJson(documents);
-			} else {
+			String json = templateDocumentBusiness.generateJson(null);
+			if (StringUtils.isEmpty(json)) {
 				return JSon.javaToJson(ReturnCode.emptyList());
+			} else {
+				return json;
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
@@ -72,12 +78,12 @@ public class TemplateController {
 	@ResponseStatus(value=HttpStatus.OK)
 	public @ResponseBody String listTemplatesById(@PathVariable String id, ModelMap modelMap) {
 		try {
-			TemplateDocument templateDocument = templateRepository.find(id);
-			if (templateDocument != null) {
-				return JSon.javaToJson(templateDocument);
-			} else {
+			String json = templateDocumentBusiness.generateJson(id);
+			if (StringUtils.isEmpty(json)) {
 				return JSon.javaToJson(ReturnCode.notFound());
-			}
+			} else {
+				return json;
+			}			
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			return JSon.javaToJson(ReturnCode.exceptionError());
@@ -170,20 +176,27 @@ public class TemplateController {
 	 */
 	@RequestMapping(value="{id}/data", method = RequestMethod.POST, produces = "application/json")
 	@ResponseStatus(value=HttpStatus.CREATED)
-	public @ResponseBody String insertData(@RequestBody String body, ModelMap modelMap) {
+	public @ResponseBody String insertData(@RequestBody String body, @PathVariable String id, ModelMap modelMap) {
 		try {
-			TemplateDocument templateDocument = JSon.jsonToJava(body);
-			List<ValidatorCodeError> msgs = validatorFields.validate(templateDocument);
-			
-			if (msgs.size() > 0) {
-				return JSon.javaToJson(msgs);
-			} else {
+			List<Map<String, Object>> listMap = JSon.jsonToJavaData(body);
+			if (listMap != null && listMap.size() > 0) {
+				TemplateDocument templateDocument = templateRepository.find(id);
 				if (templateDocument != null) {
-					templateRepository.insert(templateDocument);
-					return JSon.javaToJson(templateDocument);
+					String jsonValidate = templateDocumentBusiness.validateData(templateDocument, listMap);
+					if (!StringUtils.isEmpty(jsonValidate)) {
+						return jsonValidate;
+					} else {
+						for (Map<String, Object> map : listMap) {
+							templateDocument.addData(map);
+						}
+						templateRepository.update(templateDocument);
+						return JSon.javaToJson(listMap);
+					}
 				} else {
-					return JSon.javaToJson(ReturnCode.erroConversionJsonToJava());
+					return JSon.javaToJson(ReturnCode.notFound());
 				}
+			} else {
+				return JSon.javaToJson(ReturnCode.erroConversionJsonToJava());
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);

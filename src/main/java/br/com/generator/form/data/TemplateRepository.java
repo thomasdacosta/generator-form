@@ -1,7 +1,9 @@
 package br.com.generator.form.data;
 
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
@@ -37,6 +39,9 @@ public class TemplateRepository {
 	 * @param templateDocument
 	 */
 	public void insert(TemplateDocument templateDocument) {
+		if (StringUtils.isEmpty(templateDocument.getId())) {
+			templateDocument.setId(UUID.randomUUID().toString());
+		}
 		mongoTemplate.insert(templateDocument);
 	}
 	
@@ -46,6 +51,9 @@ public class TemplateRepository {
 	 * @param templateDocument
 	 */
 	public void update(TemplateDocument templateDocument) {
+		if (StringUtils.isEmpty(templateDocument.getId())) {
+			templateDocument.setId(UUID.randomUUID().toString());
+		}		
 		mongoTemplate.save(templateDocument);
 	}
 	

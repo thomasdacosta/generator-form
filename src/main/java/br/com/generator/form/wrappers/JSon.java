@@ -1,5 +1,9 @@
 package br.com.generator.form.wrappers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import br.com.generator.form.data.TemplateDocument;
 
 import com.google.gson.Gson;
@@ -37,5 +41,13 @@ public class JSon {
 		templateDocument = gson.fromJson(json, TemplateDocument.class);
 		return templateDocument;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Map<String, Object>> jsonToJavaData(String json) {
+		List<Map<String, Object>> listMap = new ArrayList<>();
+		Gson gson = new Gson();
+		listMap = gson.fromJson(json, listMap.getClass());
+		return listMap;
+	}	
 
 }
