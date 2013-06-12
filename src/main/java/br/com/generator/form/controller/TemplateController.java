@@ -199,6 +199,7 @@ public class TemplateController {
 				return JSon.javaToJson(ReturnCode.erroConversionJsonToJava());
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace(System.out);
 			logger.error(ex.getMessage(), ex);
 			return JSon.javaToJson(ReturnCode.exceptionError());			
 		}
