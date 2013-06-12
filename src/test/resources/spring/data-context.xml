@@ -21,7 +21,7 @@
 
 	<bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
 		<property name="host" value="localhost" />
-<!-- 		<property name="port" value="12346" /> -->
+		<property name="port" value="12346" />
 	</bean>
 
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />

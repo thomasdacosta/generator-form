@@ -330,8 +330,7 @@ public class TemplateControllerTest {
 		mvc.perform(get("/templates/" + templateDocument4.getId() + "/data").accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$", equalTo("[]")));		
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	}
 	
 	@Test
