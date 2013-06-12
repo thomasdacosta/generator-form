@@ -10,5 +10,6 @@
 	<bean id="validatorFactory" class="javax.validation.Validation" factory-method="buildDefaultValidatorFactory" />
 	<bean id="validator" factory-bean="validatorFactory" factory-method="getValidator" />
 	<bean id="validatorFields" class="br.com.generator.form.wrappers.ValidatorFields" />
+	<bean id="templateDocumentBusiness" class="br.com.generator.form.data.TemplateDocumentBusiness" />
 
 </beans>
