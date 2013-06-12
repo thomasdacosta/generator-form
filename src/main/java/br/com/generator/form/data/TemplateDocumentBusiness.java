@@ -72,13 +72,6 @@ public class TemplateDocumentBusiness {
 		return json;
 	}
 	
-	/**
-	 * Foi efetuado as validações básicas referentes aos campos
-	 * 
-	 * @param templateDocument
-	 * @param listMap
-	 * @return
-	 */
 	public String validateData(TemplateDocument templateDocument, List<Map<String, Object>> listMap) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		List<DataError> dataErrors = new ArrayList<>();
